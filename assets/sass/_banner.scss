@@ -75,7 +75,7 @@ $change4col: 1256px;
     box-sizing: border-box;
   }
 
-  h1 {
+  &__h1 {
     font-weight: normal;
     @include font-title(20px, 0.95, $color-dark, uppercase);
     margin: 5px 0 0 0;
@@ -83,7 +83,7 @@ $change4col: 1256px;
     max-width: 170px;
   }
 
-  h2 {
+  &__h2 {
     @include font-sansbold(14px, 1, #aa1f00, uppercase);
     margin: 0;
 
