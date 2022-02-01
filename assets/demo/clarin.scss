@@ -1,0 +1,26 @@
+.clarin {
+  margin: 0 auto;
+
+  @media (min-width:720px) {
+    max-width: 628px;
+  }
+
+  @media (min-width:1024px) {
+    max-width: 942px;
+  }
+
+  @media (min-width:1256px) {
+    max-width: 1254px;
+  }
+}
+
+@media (min-width:1256px) and (max-width:1519px) {
+
+  .fgpdo-triple-impact {
+    .clarin {
+
+      max-width: 942px;
+    }
+  }
+
+}

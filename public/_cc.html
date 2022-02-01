@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="stylesheet" href="https://use.typekit.net/hvg7qje.css"> -->
+
+  <link rel="stylesheet" href="../assets/demo/clarin.min.css" />
+
+  <!-- <link href="https://static.clarin.com/static/CLAClarin/css/comprimido-home/comprimido-home.css?hash=013b948c29763ae527ca284ceae36a4a" rel="stylesheet" type="text/css" rel='preload' as='style' /> -->
+
+  <style>
+    @font-face {
+      font-family: "VelinoHeadline-Black";
+      src: url('webfonts/VelinoHeadline-Black.woff2') format('woff2'), url('https://www.clarin.com/redaccionfiler/clarin/infografia/2022/data/msal/webfonts/VelinoHeadline-Black.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+  </style>
+  <title>Clarín</title>
+
+  <!-- <link rel="stylesheet" href="msal_vac_home3.min.css" /> -->
+</head>
+
+<body class="fgpdo-triple-impact">
+
+  <style>
+    /* set the CSS */
+    #dataviz_01,
+    #dataviz_02,
+    #dataviz_03 {
+      background-color: rgba(0, 0, 0, 0.05);
+      display: inline-block;
+      width: 80px;
+      height: 30px;
+    }
+
+    .velino_text_big {
+      display: inline-block;
+      font-family: 'VelinoHeadline-Black';
+      font-size: 29px;
+      color: #AA1F00;
+    }
+
+    .velino_text_big_black {
+      display: inline-block;
+      font-family: 'VelinoHeadline-Black';
+      font-size: 29px;
+    }
+
+    .velino_text_small {
+      display: inline-block;
+      font-family: 'VelinoHeadline-Black';
+      font-size: 19px;
+      color: #AA1F00;
+    }
+
+    .velino_text_small_black {
+      display: inline-block;
+      font-family: 'VelinoHeadline-Black';
+      font-size: 19px;
+      color: black;
+    }
+
+    .line {
+      fill: none;
+      stroke: #AA1F00;
+      stroke-width: 2px;
+    }
+  </style>
+
+
+  <!-- load the d3.js library -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+
+  <!-- Create a div where the graph will take place -->
+
+  <!-- internados uti -->
+  <div id="dataviz_01"></div>
+
+  <!-- positividad -->
+  <div id="dataviz_02"></div>
+
+  <!-- activos -->
+  <div id="dataviz_03"></div>
+
+  <div class='velino_text_big' id="dataviz_positividad"></div>
+
+  <div class='velino_text_big_black' id="dataviz_activos"></div>
+
+  <div class='velino_text_big_black' id="dataviz_uti"></div>
+
+  <div class='velino_text_small' id="dataviz_primera"></div>
+
+  <div class='velino_text_small_black' id="dataviz_primera_porc"></div>
+
+  <div class='velino_text_small' id="dataviz_completo"></div>
+
+  <div class='velino_text_small_black' id="dataviz_completo_porc"></div>
+
+  <div class='velino_text_small' id="dataviz_refuerzo"></div>
+
+  <div class='velino_text_small_black' id="dataviz_refuerzo_porc"></div>
+
+  <script>
+    // set the dimensions and margins of the graph
+    var margin = {
+        top: 4,
+        right: 4,
+        bottom: 2,
+        left: 2
+      },
+      width = 80 - margin.left - margin.right,
+      height = 30 - margin.top - margin.bottom;
+
+    // parse the date / time
+    var parseTime = d3.timeParse("%Y-%m-%d");
+
+    // set the ranges
+    var x = d3.scaleTime().range([0, width]);
+    var y = d3.scaleLinear().range([height, 0]);
+
+    var x2 = d3.scaleTime().range([0, width]);
+    var y2 = d3.scaleLinear().range([height, 0]);
+
+    var x3 = d3.scaleTime().range([0, width]);
+    var y3 = d3.scaleLinear().range([height, 0]);
+
+    // define the line
+    var valueline = d3.line()
+      .x(function (d) {
+        return x(d.date);
+      })
+      .y(function (d) {
+        return y(d.value);
+      });
+
+    var valueline2 = d3.line()
+      .x(function (d) {
+        return x2(d.date);
+      })
+      .y(function (d) {
+        return y2(d.value);
+      });
+
+    var valueline3 = d3.line()
+      .x(function (d) {
+        return x3(d.date);
+      })
+      .y(function (d) {
+        return y3(d.value);
+      });
+
+    // append the svg obgect to the body of the page
+    // appends a 'group' element to 'svg'
+    // moves the 'group' element to the top left margin
+    var svg = d3.select("#dataviz_01").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform",
+        "translate(" + margin.left + "," + margin.top + ")");
+
+    var svg2 = d3.select("#dataviz_02").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform",
+        "translate(" + margin.left + "," + margin.top + ")");
+
+    var svg3 = d3.select("#dataviz_03").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform",
+        "translate(" + margin.left + "," + margin.top + ")");
+
+    // Get the data
+    d3.json('https://www.clarin.com/redaccionfiler/clarin/infografia/2022/data/msal/data_home.json', {
+      cache: "no-store"
+    }).then(function (data) {
+      data_posit = data.positividad
+      data_posit_serie = data.positividad_serie
+      data_acti = data.activos
+      data_acti_serie = data.activos_serie
+      data_uti = data.internados_uti
+      data_uti_serie = data.internados_uti_serie
+      data_primera = data.primera
+      data_primera_porc = data.primera_porc
+      data_completo = data.completo
+      data_completo_porc = data.completo_porc
+      data_refuerzo = data.adicional_refuerzo
+      data_refuerzo_porc = data.adicional_refuerzo_porc
+
+
+      // format the data
+      data_uti_serie.forEach(function (d) {
+        d.date = parseTime(d.date);
+        d.value = +d.value;
+      });
+
+      data_posit_serie.forEach(function (d) {
+        d.date = parseTime(d.date);
+        d.value = +d.value;
+      });
+
+      data_acti_serie.forEach(function (d) {
+        d.date = parseTime(d.date);
+        d.value = +d.value;
+      });
+
+      // Scale the range of the data
+      x.domain(d3.extent(data_uti_serie, function (d) {
+        return d.date;
+      }));
+      y.domain([
+        d3.min(data_uti_serie, function (d) {
+          return d.value;
+        }),
+        d3.max(data_uti_serie, function (d) {
+          return d.value;
+        })
+      ]);
+
+      x2.domain(d3.extent(data_posit_serie, function (d) {
+        return d.date;
+      }));
+      y2.domain([
+        d3.min(data_posit_serie, function (d) {
+          return d.value;
+        }),
+        d3.max(data_posit_serie, function (d) {
+          return d.value;
+        })
+      ]);
+
+      x3.domain(d3.extent(data_acti_serie, function (d) {
+        return d.date;
+      }));
+      y3.domain([
+        d3.min(data_acti_serie, function (d) {
+          return d.value;
+        }),
+        d3.max(data_acti_serie, function (d) {
+          return d.value;
+        })
+      ]);
+
+      // Add the valueline path.
+      svg.append("path")
+        .data([data_uti_serie])
+        .attr("class", "line")
+        .attr("d", valueline)
+        .attr('marker-end', 'url(#dot)');
+
+      svg2.append("path")
+        .data([data_posit_serie])
+        .attr("class", "line")
+        .attr("d", valueline2)
+        .attr('marker-end', 'url(#dot2)');
+
+      svg3.append("path")
+        .data([data_acti_serie])
+        .attr("class", "line")
+        .attr("d", valueline3)
+        .attr('marker-end', 'url(#dot3)')
+
+      svg.append('defs')
+        .append('marker')
+        .attr('id', 'dot')
+        .attr('viewBox', [0, 0, 8, 8])
+        .attr('refX', 4)
+        .attr('refY', 4)
+        .attr('markerWidth', 4)
+        .attr('markerHeight', 4)
+        .append('circle')
+        .attr('cx', 4)
+        .attr('cy', 4)
+        .attr('r', 2.5)
+        .style('fill', '#AA1F00');
+
+      svg2.append('defs')
+        .append('marker')
+        .attr('id', 'dot2')
+        .attr('viewBox', [0, 0, 8, 8])
+        .attr('refX', 4)
+        .attr('refY', 4)
+        .attr('markerWidth', 4)
+        .attr('markerHeight', 4)
+        .append('circle')
+        .attr('cx', 4)
+        .attr('cy', 4)
+        .attr('r', 2.5)
+        .style('fill', '#AA1F00');
+
+      svg3.append('defs')
+        .append('marker')
+        .attr('id', 'dot3')
+        .attr('viewBox', [0, 0, 8, 8])
+        .attr('refX', 4)
+        .attr('refY', 4)
+        .attr('markerWidth', 4)
+        .attr('markerHeight', 4)
+        .append('circle')
+        .attr('cx', 4)
+        .attr('cy', 4)
+        .attr('r', 2.5)
+        .style('fill', '#AA1F00');
+
+      locale = d3.formatLocale({
+        "decimal": ",",
+        "thousands": ".",
+        "grouping": [3],
+        "currency": ["", "\u00a0€"]
+      })
+
+      format = locale.format(",")
+      format0 = locale.format(",.0f")
+      format1 = locale.format(",.1f")
+      format2 = locale.format(",.2f")
+
+      d3.select('#dataviz_positividad')
+        .text(format2(data_posit) + "%");
+
+      d3.select('#dataviz_activos')
+        .text(format0(data_acti));
+
+      d3.select('#dataviz_uti')
+        .text(format0(data_uti));
+
+      d3.select('#dataviz_primera')
+        .text(format0(data_primera));
+
+      d3.select('#dataviz_primera_porc')
+        .text(format1(data_primera_porc) + "%");
+
+      d3.select('#dataviz_completo')
+        .text(format0(data_completo));
+
+      d3.select('#dataviz_completo_porc')
+        .text(format1(data_completo_porc) + "%");
+
+      d3.select('#dataviz_refuerzo')
+        .text(format0(data_refuerzo));
+
+      d3.select('#dataviz_refuerzo_porc')
+        .text(format1(data_refuerzo_porc) + "%");
+
+    });
+  </script>
+
+</body>
+
+</html>

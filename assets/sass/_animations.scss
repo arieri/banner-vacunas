@@ -1,0 +1,88 @@
+// Animations
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+
+// Animations
+
+@keyframes anim-drag {
+
+  from,
+  to {
+    transform: translateX(-10px);
+  }
+
+  50% {
+    transform: translateX(10px);
+  }
+}
+
+@keyframes anim-mouse {
+  0% {
+    opacity: 0;
+    transform: scaleY(1) translateY(0px);
+  }
+
+  5%,
+  20% {
+    opacity: 1;
+    transform: scaleY(1) translateY(0px);
+  }
+
+  35% {
+    opacity: 1;
+    transform: scaleY(1.5) translateY(4px);
+  }
+
+  60% {
+    opacity: 0.5;
+    transform: scaleY(1) translateY(12px);
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    transform: scaleY(1) translateY(18px);
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes load8 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes load8 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

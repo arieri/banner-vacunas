@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="../assets/demo/clarin.min.css" />
+  <link rel="stylesheet"
+    href="https://www.clarin.com/static/CLAClarin/css/comprimido-home/comprimido-home.css?hash=363c8207cc4e1d118953a1fc0dd3f6d9.css">
+
+  <title>Clarín</title>
+
+</head>
+
+
+<body class="fgpdo-triple-impact">
+
+
+
+
+
+  <div class="clarin">
+    <!-- Banner -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <div class="vacunacion" id="bannerVacunacion">
+      <div class="ux-slidearrow">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="24" viewBox="0 0 15 24">
+          <path id="iconmonstr-arrow-63" d="M7.33,24,4.5,21.171,13.839,12,4.5,2.829,7.33,0,19.5,12Z"
+            transform="translate(-4.5)"></path>
+        </svg>
+      </div>
+      <div class="vacunacion__header">
+        <div class="vacunacion__header__text">
+          <h2>Coronavirus</h2>
+          <h1>La vacunación en Argentina</h1>
+        </div>
+        <small class="cta--enter"><span>Mira toda la cobertura</span> <svg xmlns="http://www.w3.org/2000/svg" width="26"
+            height="26" viewBox="0 0 26 26">
+            <g id="arrowCTA" data-name="arrowCTA" transform="translate(-118.989 -498.989)">
+              <circle id="arrowCircle" data-name="arrowCircle" cx="13" cy="13" r="13"
+                transform="translate(118.989 498.989)" fill="#AA1F00"></circle>
+              <path id="arrowPath" data-name="arrowPath"
+                d="M12.217,5.958H4.564L8.829,1.68,7.149,0,0,7.149,7.149,14.3l1.68-1.68L4.564,8.341h7.653Z"
+                transform="translate(137.097 518) rotate(180) scale(.8)" fill="#fff"></path>
+            </g>
+          </svg>
+        </small>
+      </div>
+      <div class="vacunacion__main">
+
+        <div class="vacunacion__content">
+
+          <div class="vacunacion__data data--01">
+            <div class="--tasa">
+              <h4>TASA DE POSITIVIDAD</h4>
+              <p class="--dias">Útimos 15 días</p>
+              <table>
+                <tr>
+                  <td class="--big --border-b"><span id="dataviz_positividad"></span></td>
+                  <td class="--t-right --border-b">
+                    <div id="dataviz_01" class="dataviz"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <th colspan="2">
+                    <span>Representa el porcentaje de testeos positivos en 24 hs.</span>
+                  </th>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="vacunacion__data data--02">
+            <div class="--genero">
+              <h4>SITUACIÓN ACTUAL</h4>
+              <p class="--dias">Útimos 15 días</p>
+              <table>
+                <tr>
+                  <th class="--border-b">Casos activos</th>
+                  <td class="--dark --big --t-right --border-b">
+                    <span id="dataviz_activos"></span>
+                  </td>
+                  <td class="--t-right --border-b">
+                    <div id="dataviz_02" class="dataviz"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Camas UTI <br>ocupadas por Covid</th>
+                  <td class="--dark --big --t-right --border-bt">
+                    <span id="dataviz_uti"></span>
+                  </td>
+                  <td class="--t-right">
+                    <div id="dataviz_03" class="dataviz"></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="vacunacion__data data--03">
+            <div class="--dosis">
+              <h4>PERSONAS VACUNADAS</h4>
+              <table>
+                <tr>
+                  <th class="--border-b">Con 1 dosis</th>
+                  <td class="--border-b">
+                    <span id="dataviz_primera"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <th class="--border-b">Esquema completo</th>
+                  <td class="--border-b">
+                    <span id="dataviz_completo"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Refuerzo</th>
+                  <td>
+                    <span id="dataviz_refuerzo"></span>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="--porcentaje">
+              <h4>% de la población</h4>
+              <table>
+                <tr>
+                  <td class="--dark --border-b">
+                    <span id="dataviz_primera_porc"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="--dark --border-b">
+                    <span id="dataviz_completo_porc"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="--dark --dark-bottom">
+                    <span id="dataviz_refuerzo_porc"></span>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <img src="https://www.clarin.com/redaccionfiler/clarin/desarrollo/2022/home/vacunacion/coronavirus.png"
+        alt="Covid-19" id="dockImage" class="dockimage">
+    </div>
+    <script>
+      const URL_ESPECIAL = 'https://www.clarin.com/tema/coronavirus-en-argentina.html';
+    </script>
+    <link rel="stylesheet" href="https://www.clarin.com/redaccionfiler/clarin/desarrollo/2022/home/vacunacion/2022011202.css">
+    <script src="https://www.clarin.com/redaccionfiler/clarin/desarrollo/2022/home/vacunacion/2022011201.js"></script>
+
+
+    <!-- / Banner -->
+    <!-- https://www.clarin.com/redaccionfiler/clarin/desarrollo/2022/home/vacunacion/ -->
+
+  </div>
+
+
+</body>
+
+</html>
